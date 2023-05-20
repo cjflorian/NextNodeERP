@@ -9,10 +9,13 @@ export default function Home() {
         <title>{siteTitle}</title>
       </Head>
       <section className={utilStyles.headingMd}>
-        <p>I'm a software developer that loves learn new solutions for me and for work</p>
+        <p>I'm a software Engineer and full stack developer that loves learn new technologies and make the best solution for any kind of need for me and  anybody in the world</p>
+        <br></br>
+        <p>→ Look at this demo <a href="/users/users"> Users</a> </p>
+        <br></br>
         <p>
-          (This is a sample website - you’ll be building a site like this on{' '}
-          <a href="https://nextjs.org/learn">our Next.js tutorial</a>.)
+          (This is a Demo using Next.js as a framework implemented in AWS cloud, please check my Linkedin Profile{' '}
+          <a href="https://www.linkedin.com/in/jos%C3%A9-flori%C3%A1n-n%C3%A1jera-7a142045/">José Florián</a>.)
         </p>
       </section>
     </Layout>
