@@ -3,8 +3,7 @@
 import { React, useEffect, useState  } from 'react'
 import { useTable, useFilters, useSortBy } from "react-table";
 
-
-export default function Table({ columns, data }) {
+export default function Table({ columns, data, endpoint }) {
 
     
 // Create a state
@@ -50,7 +49,7 @@ const {
         onChange={handleFilterChange}
         placeholder={"Search name"}
         />
-    <table {...getTableProps()}>
+    <table {...getTableProps()} striped bordered hover variant="dark">
       <thead>
         {headerGroups.map(headerGroup => (
           <tr {...headerGroup.getHeaderGroupProps()}>
@@ -67,6 +66,7 @@ const {
            >
              {column.render("Header")}
            </th>
+           
             ))}
           </tr>
         ))}
@@ -77,7 +77,8 @@ const {
           return (
             <tr {...row.getRowProps()}>
               {row.cells.map(cell => {
-                return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
+               // console.log(cell);
+                  return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
               })}
               <td>
 

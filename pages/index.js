@@ -1,12 +1,14 @@
 import Head from 'next/head';
 import Layout, { siteTitle } from '../components/layout';
 import utilStyles from '../styles/utils.module.css';
+import Button from 'react-bootstrap/Button';
 
 export default function Home() {
   return (
     <Layout home>
       <Head>
         <title>{siteTitle}</title>
+       
       </Head>
       <section className={utilStyles.headingMd}>
         <p>I'm a software Engineer and full stack developer that loves learn new technologies and make the best solution for any kind of need for me and  anybody in the world</p>
