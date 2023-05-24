@@ -16,19 +16,26 @@ export default function Users() {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const [edit, setEdit] = useState(false);    
-    const [id, setId] = useState("")
+    const [id, setId] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [name, setName] = useState("");
+    const [activo, setActivo] = useState(true);
+    const [error, setError] = useState(null);
+    const [dataEdit, setDataEdit] = useState([]);
+
     const [form, SetForm] = useState({
       id:0,
       email: '',
       name: '',
-      password: ''
+      password: '',
+      activo: true
   });
 
   
   const handleChange = (e) => {
     setError(null)
     const { name, value } = e.target
-
     SetForm({
         ...form,
         [name]: value
@@ -38,7 +45,9 @@ export default function Users() {
     const handleShow = () => {
       setShow(true);
       setAction(actions.find(x => x.type === 'N'))
-      setEdit(false)
+      setEdit("")
+      SetForm()
+      setId("")
     }
 
     
@@ -47,18 +56,36 @@ export default function Users() {
         console.log(result.data);
         setData(result.data);
     })
-      console.log(data);
-    }, [])
+    }, [id])
 
 
     
     const handleEdit = (event) => {
       console.log(event.id);
       setShow(true);
-      setAction(actions.find(x => x.type === 'U'))
-      setEdit(true)
+      setAction(actions.find(x => x.type === 'U'));
+      setEdit(true);
       setId(event.id);
+      editByID(event.id);
     };
+
+    const editByID = (idE) => {
+      debugger;
+      let endPointEdit = endPoint + '?id='+idE
+      axios.get(endPointEdit, {}).then((result) => {
+        console.log(result.data);
+        setDataEdit(result.data);
+        setEmail(result.data[0].email);
+        setActivo(result.data[0].activo);
+        setName(result.data[0].name);
+        setPassword(result.data[0].password);
+
+    })
+    }
+
+    const handleSave =() => {
+      console.log(form)
+    }
 
     
 
@@ -86,7 +113,7 @@ export default function Users() {
               accessor: 'action',
               Cell: row => (
               <div>
-                 <Button onClick={e=> handleEdit(row.row.original)}>Edit</Button>
+                 <Button className="warning" onClick={e=> handleEdit(row.row.original)}>Edit</Button>
               </div>
               )
             }
@@ -98,6 +125,7 @@ export default function Users() {
 
     var formTitle = edit ? "Edit" : "Create";
   
+    
 
     if (!data) return <div>loading...</div>;
   return (
@@ -112,29 +140,50 @@ export default function Users() {
         <Modal.Header closeButton>
           <Modal.Title>{ formTitle } </Modal.Title>
         </Modal.Header>
-        <Modal.Body>Woohoo, you're reading this text in a modal!
-          <Form.Control 
-            size="sm" 
-            type="text"
-            name='id'
-            value={id}
-          />
+        <Modal.Body>
+        <Form>
+        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+          <Form.Label>Id</Form.Label>
+          <Form.Control type="text" placeholder="name@example.com" readOnly={true} disabled={true} size="sm" name='id' value={id} />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+          <Form.Label>Email</Form.Label>
+          <Form.Control type="email" placeholder="name@example.com"  size="sm" name='email'  onChange={handleChange} />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+          <Form.Label>Name</Form.Label>
+          <Form.Control type="text" placeholder="example" size="sm" name='name' onChange={handleChange} value={name} />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+          <Form.Label>Password</Form.Label>
+          <Form.Control type="password"  size="sm" name='password' onChange={handleChange}  value={password}/>
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+          <Form.Label>Activo</Form.Label>
+          <Form.Check type="switch"  size="sm" name='activo' onChange={handleChange} value={id} />
+        </Form.Group>
+        <Button className="success"></Button>
+        </Form>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="success" onClick={handleSave}>
             Save Changes
           </Button>
         </Modal.Footer>
       </Modal>
-      <Button variant="primary" onClick={handleShow}>
-        New item
+      <Button variant="success" onClick={handleShow}>
+        New
       </Button>
       <br></br>
       <>
-      <Table columns={columns} data={data} endpoint={endPoint} />
+      <Table columns={columns} data={data}  />
       </>
       </Layout>
   );
