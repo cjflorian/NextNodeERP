@@ -2,5 +2,6 @@ export const User  = {
     id: 0,
     email: '',
     name: '',
-    password: ''
+    password: '',
+    activo: 1
 }

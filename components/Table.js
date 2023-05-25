@@ -2,8 +2,7 @@
 
 import { React, useEffect, useState  } from 'react'
 import { useTable, useFilters, useSortBy } from "react-table";
-
-export default function Table({ columns, data, endpoint }) {
+export default function Table({ columns, data }) {
 
     
 // Create a state
