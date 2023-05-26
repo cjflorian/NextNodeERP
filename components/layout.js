@@ -24,6 +24,7 @@ export default function Layout({ children, home }) {
             />
             <meta name="og:title" content={siteTitle} />
             <meta name="twitter:card" content="summary_large_image" />
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
             
           </Head>
           <header className={styles.header}>
@@ -41,19 +42,10 @@ export default function Layout({ children, home }) {
               </>
             ) : (
               <>
-                <Link href="/">
-                  <Image
-                    priority
-                    src="/images/profile.jpg"
-                    className={utilStyles.borderCircle}
-                    height={108}
-                    width={108}
-                    alt=""
-                  />
-                </Link>
+                
                 <h2 className={utilStyles.headingLg}>
                   <Link href="/" className={utilStyles.colorInherit}>
-                    {name}
+                    Welcome to my demo!!!
                   </Link>
                 </h2>
               </>

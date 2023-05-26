@@ -3,5 +3,5 @@ export const User  = {
     email: '',
     name: '',
     password: '',
-    activo: 1
+    active: 1
 }

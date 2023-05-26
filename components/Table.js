@@ -1,7 +1,9 @@
 
 
-import { React, useEffect, useState  } from 'react'
+import { React,  useState  } from 'react'
 import { useTable, useFilters, useSortBy } from "react-table";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 export default function Table({ columns, data }) {
 
     
@@ -43,12 +45,13 @@ const {
   */
   return (
     <>
-    <input
-        value={filterInput}
-        onChange={handleFilterChange}
-        placeholder={"Search name"}
-        />
-    <table {...getTableProps()} striped bordered hover variant="dark">
+    <div class="input-group rounded">
+    <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon"  value={filterInput}   onChange={handleFilterChange}/>
+    <span className="input-group-text border-0" id="search-addon">
+    <i class="fa fa-search"></i>
+    </span>
+  </div>
+    <table {...getTableProps()} className='table table-bordered table-hover'>
       <thead>
         {headerGroups.map(headerGroup => (
           <tr {...headerGroup.getHeaderGroupProps()}>
@@ -76,12 +79,8 @@ const {
           return (
             <tr {...row.getRowProps()}>
               {row.cells.map(cell => {
-               // console.log(cell);
                   return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
               })}
-              <td>
-
-              </td>
             </tr>
           );
         })}

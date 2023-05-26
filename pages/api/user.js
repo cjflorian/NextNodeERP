@@ -23,7 +23,8 @@ export default async (req, res) => {
         User.email = req.body.email;
         User.name = req.body.name;
         User.password = req.body.password;
-        const strQuery =  `UPDATE users SET email='${User.email}', name='${User.name}', password=crypt('${User.password}', gen_salt('bf', 4)) WHERE id=${User.id};`;
+        User.active = req.body.active;
+        const strQuery =  `UPDATE users SET email='${User.email}', name='${User.name}', password=crypt('${User.password}', gen_salt('bf', 4)), active = '${User.active}' WHERE id=${User.id};`;
         const user = await db.query(strQuery);
         res.json(user);
       } catch (error) {
