@@ -2,7 +2,6 @@
 
 import { React,  useState  } from 'react'
 import { useTable, useFilters, useSortBy } from "react-table";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default function Table({ columns, data }) {
 
