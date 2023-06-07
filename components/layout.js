@@ -27,6 +27,42 @@ export default function Layout({ children, home }) {
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
             
           </Head>
+          <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+              <a class="navbar-brand" href="#">Welcome</a>
+              <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item active">
+                  <h6>
+                  <a class="nav-link" href="/">Home</a>
+                  </h6>
+                </li>
+                <li class="nav-item">
+                  <h6>
+                  <a class="nav-link" href="/users/users">Users</a>
+                  </h6>
+                </li>
+                <li class="nav-item">
+                </li>
+              </ul>
+             
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                <h6>
+                  <a class="nav-link" href="/users/users">Sign Up</a>
+                </h6>
+                </li>
+                <li>
+                  <h6>
+                  <a class="nav-link" href="/login">Login</a>
+                  </h6>
+                </li>
+              </ul>
+          </nav>
+       
           <header className={styles.header}>
             {home ? (
               <>
