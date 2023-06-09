@@ -6,7 +6,7 @@ import Table from "../components/Table";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import actions from "../components/Actions";
-import  { SwalertOk, SwalertError, SwalertConfirmDelete }  from "../components/utils/Utils";
+import  { SwalertOk, SwalertError, SwalertConfirmDelete, getToken, setUserSession }  from "../components/utils/Utils";
 import _axios from '../components/AxiosInstance';
 const endPoint = '/api/auth'
 const Login = require('../components/models/login');
@@ -21,15 +21,19 @@ export default function Users() {
     password: ''
 });
 
+
+
   const handleSubmit = (event) => {
     event.preventDefault();
     
-    Login.user = event.target[0].value;
-    Login.password = event.target[1].value;
-  
-      if(validatedata(Login))
+    const obj = {
+      name: event.target[0].value,
+      password: event.target[1].value
+    };
+    console.log(obj)
+      if(validatedata(obj))
       {
-        LoginUser(Login)
+        LoginUser(obj)
       }
       else
         SwalertError('Error in credentials')
@@ -45,12 +49,18 @@ export default function Users() {
      }
 
      const LoginUser = (model) => {
-      console.log(model)
-      console.log(endPoint)
         _axios.post(endPoint, model).then((result) => {
-          setShow(false);
-          setId(0);
+          //setUserSession()
+          console.log(result)
+          setUserSession(result.data.payload.id, model.name, result.data.payload.email,  result.data.token)
           SwalertOk('Validating credentials')
+          if (!(getToken === null)) {
+            window.location = './main'
+        } else {
+            setError(
+                'Token no inicializado'
+            )
+        }
         })
      }
  

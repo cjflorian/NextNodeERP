@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { SwalertOk, SwalertError, getToken, getIdusuario }  from "./utils/Utils"
+import { SwalertOk, SwalertError, getToken, getIdUser }  from "./utils/Utils"
 const _axios = axios.create({
 })
 
@@ -12,7 +12,7 @@ _axios.interceptors.request.use(
         config.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization, X-Requested-With'
         // config.headers['mimeType'] = 'multipart/form-data;';
         config.headers.Authorization = `Bearer ${getToken()}`
-        config.headers.IdUsuario = `${getIdusuario()}`
+        config.headers.IdUsuario = `${getIdUser()}`
         return config
     },
     error => Promise.reject(error)

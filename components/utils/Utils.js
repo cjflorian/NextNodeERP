@@ -5,8 +5,25 @@ import Swal from "sweetalert2"
 import "bootstrap/dist/css/bootstrap.min.css"
 
 
-export const getIdusuario = () => {
-    return sessionStorage.getItem('idusuario') || null
+
+export const setUserSession = ( iduser, user,  email, token) => {
+    sessionStorage.setItem('token', token)
+    sessionStorage.setItem('email', email)
+    sessionStorage.setItem('user', JSON.stringify(user))
+    sessionStorage.setItem('iduser', iduser)
+    
+}
+
+export const removeUserSession = () => {
+    sessionStorage.removeItem('token')
+    sessionStorage.removeItem('email')
+    sessionStorage.removeItem('user')
+    sessionStorage.removeItem('iduser')
+}
+
+
+export const getIdUser = () => {
+    return sessionStorage.getItem('iduser') || null
 }
 export const getToken = () => {
     return sessionStorage.getItem('token')

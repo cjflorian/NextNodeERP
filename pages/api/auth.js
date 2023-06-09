@@ -30,12 +30,12 @@ export default async (req, res) => {
             
             
             /* Check if exists */
-            if (user.rows.iduser===null) {
+            if (user.rows[0].iduser===null) {
               /* Send error with message */
               res.status(400).json({ status: 'error', error: 'User Not Found' });
             }
             /* Variables checking */
-            if (user) {
+            else {
                 
                 /* Create JWT Payload */
                 const payload = {
@@ -53,6 +53,7 @@ export default async (req, res) => {
                     (err, token) => {
                       /* Send succes with token */
                       res.status(200).json({
+                        payload,
                         success: true,
                         token: 'Bearer ' + token,
                       });
