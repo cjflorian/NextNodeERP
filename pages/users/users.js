@@ -71,16 +71,18 @@ export default function Users() {
       editByID(event.id);
     };
 
-    const handleDelete =  async () => {
-      let result = await resp()
-      
+    const handleDelete =  async (event) => {
+     // let result = await resp()
+        setId(event.id)
+        console.log(event.id)
+        let result = false
+        result = await SwalertConfirmDelete()
+        console.log('doDelete', result)
+        if(result===true)
+          deleteData()
     };
 
-    const resp= async () => {
-      let result = await SwalertConfirmDelete('')
-      console.log(result);
-      return result; 
-    }
+  
 
     const editByID = (idE) => {
       let endPointEdit = endPoint + '?id='+idE;
@@ -151,12 +153,13 @@ export default function Users() {
     const deleteData = () =>{
       
       let endPointEdit = endPoint + '?id='+id;
-      _axios.delete(endPointEdit, model).then((result) => {
+      _axios.delete(endPointEdit, '').then((result) => {
         setShow(false);
         setId(0);
         SwalertOk('New item delete succesfully!')
       })
     }
+
     
 
     const columns = useMemo(
@@ -206,6 +209,7 @@ export default function Users() {
        
       </Head>
       <h1>users</h1>
+      
       <Modal show={show} onHide={handleClose} animation={false}>
         <Modal.Header closeButton>
           <Modal.Title>{ formTitle } </Modal.Title>
@@ -270,6 +274,7 @@ export default function Users() {
         New
       </Button>
       <br></br>
+      
       <>
       <Table columns={columns} data={data}  />
       </>

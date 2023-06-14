@@ -3,8 +3,11 @@
 
 import Swal from "sweetalert2"
 import "bootstrap/dist/css/bootstrap.min.css"
+import Router from 'next/router';
+import Cookies from 'js-cookie';
+import jwt from 'jsonwebtoken';
 
-
+const SECRET_KEY = process.env.JWT_KEY;
 
 export const setUserSession = ( iduser, user,  email, token) => {
     sessionStorage.setItem('token', token)
@@ -61,8 +64,8 @@ Swal.fire({
 }
 
 
-export const SwalertConfirmDelete = async (message = '') => {
-    Swal.fire({
+export const SwalertConfirmDelete = () => {
+    return Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
         icon: 'warning',
@@ -72,9 +75,68 @@ export const SwalertConfirmDelete = async (message = '') => {
         confirmButtonText: 'Yes, delete it!'
       }).then((result) => {
         if (result.isConfirmed) {
-            return true
+            return result.isConfirmed;
         }
-        else
-            return false
       })
 }
+
+
+/*
+ * @params {jwtToken} extracted from cookies
+ * @return {object} object of extracted token
+ */
+export const verifyToken = (jwtToken) => {
+    try {
+      return jwt.verify(jwtToken, SECRET_KEY);
+    } catch (e) {
+      console.log('e:', e);
+      return null;
+    }
+  }
+  
+  /*
+   * @params {request} extracted from request response
+   * @return {object} object of parse jwt cookie decode object
+   */
+  export const getAppCookies = (req) => {
+    const parsedItems = {};
+    if (req.headers.cookie) {
+      const cookiesItems = req.headers.cookie.split('; ');
+      cookiesItems.forEach(cookies => {
+        const parsedItem = cookies.split('=');
+        parsedItems[parsedItem[0]] = decodeURI(parsedItem[1]);
+      });
+    }
+    return parsedItems;
+  }
+  
+  /*
+   * @params {request} extracted from request response, {setLocalhost} your localhost address
+   * @return {object} objects of protocol, host and origin
+   */
+  export const absoluteUrl = (req, setLocalhost) => {
+    var protocol = 'https:';
+    var host = req
+      ? req.headers['x-forwarded-host'] || req.headers['host']
+      : window.location.host;
+    if (host.indexOf('localhost') > -1) {
+      if (setLocalhost) host = setLocalhost;
+      protocol = 'http:';
+    }
+    return {
+      protocol: protocol,
+      host: host,
+      origin: protocol + '//' + host,
+      url: req,
+    };
+  }
+  
+  /*
+   * @params {none} set action for logout and remove cookie
+   * @return {function} router function to redirect
+   */
+  export const setLogout = (e) => {
+    e.preventDefault();
+    Cookies.remove('token');
+    Router.push('/');
+  }
