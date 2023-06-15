@@ -6,12 +6,13 @@ const _axios = axios.create({
 
 // Add a request interceptor for customs headers
 _axios.interceptors.request.use(
+    
     config => {
         config.headers['Access-Control-Allow-Origin'] = '*'
         // config.headers['Access-Control-Allow-Headers'] = '*';
         config.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization, X-Requested-With'
         // config.headers['mimeType'] = 'multipart/form-data;';
-        config.headers.Authorization = `Bearer ${getToken()}`
+        config.headers.Authorization = `${getToken()}`
         config.headers.IdUsuario = `${getIdUser()}`
         return config
     },
