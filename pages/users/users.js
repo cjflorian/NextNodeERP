@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Head from 'next/head';
 import Layout from '../../components/layout'
 import { useEffect, useState, useMemo  } from 'react'
-import Table from "../../components/Table";
+import Table from "../../components/table/Table";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import actions from "../../components/Actions";
@@ -27,6 +27,12 @@ export default function Users() {
     const [active, setActive] = useState(false);
     const [dataEdit, setDataEdit] = useState([]);
     const value = useMemo(() => ({ a: id }), [id]);
+    const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(10);
+    const [numPages, setNumPages] = useState()
+    const [arrPages, setArrPage] = useState([]);
+    const valuePage = useMemo(() => ({ b: page }), [page]);
+    const [isActive, setIsActive] = useState(false);
 
     const [form, SetForm] = useState({
       id:0,
@@ -48,10 +54,14 @@ export default function Users() {
 
     
     useEffect(() => {
-      _axios.get(endPoint, {}).then((result) => {
-        setData(result.data);
+      let endPointPaginate = endPoint + `?page=${page}?&limit=${limit}`
+      _axios.get(endPointPaginate, {}).then((result) => {
+        console.log(result.data)
+        setData(result.data.data);
+        setNumPages(result.data.paging.pages)
+        setArrPage( Array.from(Array(result.data.paging.pages).keys()) )
     })
-    }, [id])
+    }, [id, page])
 
     const cleanForm = () => {
         setEmail("");
@@ -158,6 +168,14 @@ export default function Users() {
         setId(0);
         SwalertOk('New item delete succesfully!')
       })
+    }
+
+    const onPageSelect = (page, idName) => {
+      setPage(page)
+      setNumPages(page)
+      console.log(page)
+      const el = document.getElementById(idName);
+      el.className = "btn btn-success";
     }
 
     
@@ -276,7 +294,18 @@ export default function Users() {
       <br></br>
       
       <>
+      
       <Table columns={columns} data={data}  />
+      {arrPages.map((num, index) => (
+              <button
+               className='btn btn-light'
+               id = { 'btn'+ (index + 1)}
+                onClick={() => onPageSelect(index + 1, 'btn'+ (index + 1) )}
+                
+              >
+                {index + 1}
+              </button>
+            ))}
       </>
       </Layout>
   );
