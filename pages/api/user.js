@@ -1,10 +1,10 @@
 const db = require('../../components/database/database');
 const User = require('../../components/models/user');
+import { json } from 'express';
 import { verifyToken }  from '../../components/utils/Utils'
 
 export default async (req, res) => {
 
-    console.log(JSON.stringify(req.query))
     const token = req.headers.authorization.split(' ')[1];
     //console.log(token)
     if(verifyToken(token))
@@ -52,11 +52,37 @@ export default async (req, res) => {
         }
         else
         {
-          if(JSON.stringify(req.query)=== "{}")
+          let id = JSON.stringify(req.query.id)? JSON.stringify(req.query.id) : 0
+          console.log(id)
+          if( id === 0)
           {
-            console.log('All');
+            //pagination api side
+            const search = req.query.search ? req.query.search : '' ;
+            const page = req.query.page ? parseInt(req.query.page) : 0;
+            const limit = req.query.limit  ? parseInt(req.query.limit) : 10;
+            const iniRange = page * limit-limit;
+            const endRange =  iniRange+limit;
+            let dataCollection;
+            let dataCollectionCount;
             const users = await db.query('SELECT * FROM users');
-            res.json(users.rows);
+            const usersJson = (users.rows)
+            if (search) {
+              dataCollection = await usersJson.filter(item => item.name.toLowerCase().includes(search)).slice(0,limit);
+              dataCollectionCount = await Object.keys(dataCollection).length;
+            } else {
+              dataCollection = await usersJson.slice(iniRange,endRange);
+              dataCollectionCount = await Object.keys(usersJson).length;
+            }
+            const totalPages = Math.ceil(dataCollectionCount / limit);
+            const currentPage = page;
+           res.status(200).send({
+            data: dataCollection,
+            paging: {
+              total: dataCollectionCount,
+              page: currentPage,
+              pages: totalPages,
+            },
+          });
           }
           else
           {
@@ -64,8 +90,7 @@ export default async (req, res) => {
             const idUser = parseInt(req.query.id)
             const users = await db.query('SELECT * FROM users where id='+idUser);
             res.json(users.rows);
-          }
-          
+          }        
         }
       }
     else  
