@@ -1,11 +1,5 @@
 import Link from 'next/link';
-import Head from 'next/head';
-import Layout from '../components/layout'
 import { useEffect, useState, useMemo  } from 'react'
-import Table from "../components/Table";
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import actions from "../components/Actions";
 import  { SwalertOk, SwalertError, SwalertConfirmDelete, getToken, setUserSession }  from "../components/utils/Utils";
 import _axios from '../components/AxiosInstance';
 const endPoint = '/api/auth'
