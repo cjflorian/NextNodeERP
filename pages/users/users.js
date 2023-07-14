@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import Head from 'next/head';
 import Layout from '../../components/layout'
-import { useEffect, useState, useMemo  } from 'react'
+import {  react, useEffect, useState, useMemo  } from 'react'
+import ReactDOM from 'react-dom';
 import Table from "../../components/table/Table";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -10,6 +11,7 @@ import  { SwalertOk, SwalertError, SwalertConfirmDelete }  from "../../component
 import _axios from '../../components/AxiosInstance';
 const endPoint = '/api/user'
 const User = require('../../components/models/user');
+import generatePDF from "./reportGenerator"
 
 
 
@@ -227,7 +229,12 @@ export default function Users() {
        
       </Head>
       <h1>users</h1>
-      
+      <button
+              className="btn btn-primary"
+              onClick={() => generatePDF(data)}
+            >
+              Report
+            </button>
       <Modal show={show} onHide={handleClose} animation={false}>
         <Modal.Header closeButton>
           <Modal.Title>{ formTitle } </Modal.Title>
@@ -291,10 +298,10 @@ export default function Users() {
       <Button variant="success" onClick={handleShow}>
         New
       </Button>
+      
       <br></br>
       
       <>
-      
       <Table columns={columns} data={data}  />
       {arrPages.map((num, index) => (
               <button

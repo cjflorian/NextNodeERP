@@ -50,7 +50,7 @@ _axios.interceptors.response.use(
                 SwalertError('Recurso no encontrado')
                 break
             case 500:
-                alertError('Lo sentimos, algo salió mal, por favor intentelo nuevamente',
+                SwalertError('Lo sentimos, algo salió mal, por favor intentelo nuevamente',
                     'Si el error persiste envíe un correo a soporte@coporaciontak.com')
                 break
             default:

@@ -53,8 +53,9 @@ export default async (req, res) => {
         else
         {
           let id = JSON.stringify(req.query.id)? JSON.stringify(req.query.id) : 0
+          let rpt = JSON.stringify(req.query.rpt)? JSON.stringify(req.query.rpt) : false
           console.log(id)
-          if( id === 0)
+          if( id === 0 && rpt === false)
           {
             //pagination api side
             const search = req.query.search ? req.query.search : '' ;
@@ -83,6 +84,12 @@ export default async (req, res) => {
               pages: totalPages,
             },
           });
+          }
+          else if(rpt === true)
+          {
+            console.log('rpt')
+            const users = await db.query('SELECT * FROM users ');
+            res.json(users.rows);
           }
           else
           {

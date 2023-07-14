@@ -1,8 +1,7 @@
-export const User  = {
+export const Role  = {
     id: 0,
-    email: '',
     name: '',
-    password: '',
+    description: '',
     datecreated: '',
     active: 1
 }
