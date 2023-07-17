@@ -1,12 +1,16 @@
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 const User = require('../../components/models/user');
+import {  react, useEffect } from 'react'
 // Date Fns is used to format the dates we receive
 // from our API call
 import { format } from "date-fns";
 
+
 // define a generatePDF function that accepts a tickets argument
-const generatePDF = objects => {
+const generatePDF = (objects) => {
+
+  
   // initialize jsPDF
   const doc = new jsPDF();
 
@@ -16,6 +20,20 @@ const generatePDF = objects => {
   const tableRows = [];
 
   // for each ticket pass all its data into an array
+  Object.entries(objects).forEach(entry => {
+    const [key, value] = entry;
+    console.log(key, value);
+    const objectData = [
+      value.id,
+      value.name,
+      value.email,
+      value.active,
+    // called date-fns to format the date on the ticket
+    format(new Date(value.datecreated), "yyyy-MM-dd")
+  ];
+  tableRows.push(objectData);
+  });
+  /*
   objects.forEach(object => {
     const objectData = [
         object.id,
@@ -28,7 +46,7 @@ const generatePDF = objects => {
     // push each tickcet's info into a row
     tableRows.push(objectData);
   });
-
+*/
 
   // startY is basically margin-top
   doc.autoTable(tableColumn, tableRows, { startY: 20 });

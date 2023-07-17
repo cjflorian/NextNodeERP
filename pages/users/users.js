@@ -60,7 +60,7 @@ export default function Users() {
     useEffect(() => {
       let endPointPaginate = endPoint + `?page=${page}?&limit=${limit}`
       _axios.get(endPointPaginate, {}).then((result) => {
-        console.log(result.data)
+        //console.log(result.data)
         setData(result.data.data);
         setNumPages(result.data.paging.pages)
         setArrPage( Array.from(Array(result.data.paging.pages).keys()) )
@@ -88,10 +88,8 @@ export default function Users() {
     const handleDelete =  async (event) => {
      // let result = await resp()
         setId(event.id)
-        console.log(event.id)
         let result = false
         result = await SwalertConfirmDelete()
-        console.log('doDelete', result)
         if(result===true)
           deleteData()
     };
@@ -101,7 +99,6 @@ export default function Users() {
     const editByID = (idE) => {
       let endPointEdit = endPoint + '?id='+idE;
       _axios.get(endPointEdit, {}).then((result) => {
-      console.log(result.data[0]);
       setName(result.data[0].name);
       setEmail(result.data[0].email);
       setPassword(result.data[0].password);
@@ -114,12 +111,12 @@ export default function Users() {
 
     const handleSubmit = (event) => {
       event.preventDefault();
-      console.log(event);
+      
       User.name = event.target[1].value;
       User.email = event.target[2].value;
       User.password = event.target[3].value;
       User.active = event.target[5].value;
-      console.log(User)
+      
       if(User.password === event.target[4].value){
         if(validatedata(User))
         {
@@ -177,7 +174,6 @@ export default function Users() {
     const onPageSelect = (page, idName) => {
       setPage(page)
       setNumPages(page)
-      console.log(page)
       const el = document.getElementById(idName);
       el.className = "btn btn-success";
     }
