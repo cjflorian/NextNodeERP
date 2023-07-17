@@ -3,8 +3,10 @@ import Head from 'next/head';
 import Image from 'next/image';
 import utilStyles from '../styles/utils.module.css';
 import Link from 'next/link';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHome, faUsers, faCoffee, faSignIn} from '@fortawesome/free-solid-svg-icons'
 
-const name = 'Jose Florian';
+const name = 'José Florián';
 export const siteTitle = 'Next.js Sample Website';
 
 export default function Layout({ children, home }) {
@@ -26,37 +28,37 @@ export default function Layout({ children, home }) {
             <meta name="twitter:card" content="summary_large_image" />
            
           </Head>
-          <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
+          <nav className="navbar navbar-expand-lg navbar-light">
+            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+              <span className="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-              <a class="navbar-brand" href="#">Welcome</a>
-              <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                <li class="nav-item active">
+            <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
+              <a className="navbar-brand" href="#">Welcome</a>
+              <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li className="nav-item active">
                   <h6>
-                  <a class="nav-link" href="/">Home</a>
+                  <a className="nav-link" href="/"><FontAwesomeIcon icon={ faHome} style={{ height: "20px" }} /> Home</a>
                   </h6>
                 </li>
-                <li class="nav-item">
+                <li className="nav-item">
                   <h6>
-                  <a class="nav-link" href="/users/users">Users</a>
+                  <a className="nav-link" href="/users/users"> <FontAwesomeIcon icon={faUsers} style={{ height: "20px" }} /> Users</a>
                   </h6>
                 </li>
-                <li class="nav-item">
+                <li className="nav-item">
                 </li>
               </ul>
              
             </div>
-            <ul class="nav navbar-nav navbar-right">
+            <ul className="nav navbar-nav navbar-right">
                 <li>
                 <h6>
-                  <a class="nav-link" href="/users/users">Sign Up</a>
+                  <a className="nav-link" href="/users/users"> <FontAwesomeIcon icon={faCoffee} style={{ height: "20px" }} /> Sign Up</a>
                 </h6>
                 </li>
                 <li>
                   <h6>
-                  <a class="nav-link" href="/login">Login</a>
+                  <a className="nav-link" href="/login"><FontAwesomeIcon icon={ faSignIn} style={{ height: "20px" }} /> Login</a>
                   </h6>
                 </li>
               </ul>
@@ -77,12 +79,6 @@ export default function Layout({ children, home }) {
               </>
             ) : (
               <>
-                
-                <h2 className={utilStyles.headingLg}>
-                  <Link href="/" className={utilStyles.colorInherit}>
-                    Welcome to my demo!!!
-                  </Link>
-                </h2>
               </>
             )}
           </header>

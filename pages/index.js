@@ -2,6 +2,8 @@ import Head from 'next/head';
 import Layout, { siteTitle } from '../components/layout';
 import utilStyles from '../styles/utils.module.css';
 import Button from 'react-bootstrap/Button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUser, faPrint, faEdit, faClose } from '@fortawesome/free-solid-svg-icons'
 
 export default function Home() {
   return (
@@ -13,7 +15,7 @@ export default function Home() {
       <section className={utilStyles.headingMd}>
         <p>I'm a software Engineer and full stack developer that loves learn new technologies and make the best solution for any kind of need for me and  anybody in the world</p>
         <br></br>
-        <p>→ Look at this demo <a href="/users/users"> Users</a> </p>
+        <p><FontAwesomeIcon icon={faUser} style={{ height: "20px" }} /> → Look at this demo <a href="/users/users">  Users</a> </p>
         <br></br>
         <p>
           (This is a Demo using Next.js as a framework implemented in AWS cloud, please check my Linkedin Profile{' '}

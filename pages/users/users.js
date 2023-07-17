@@ -12,6 +12,8 @@ import _axios from '../../components/AxiosInstance';
 const endPoint = '/api/user'
 const User = require('../../components/models/user');
 import generatePDF from "./reportGenerator"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus, faPrint, faUser, faEdit, faClose } from '@fortawesome/free-solid-svg-icons'
 
 
 
@@ -205,8 +207,8 @@ export default function Users() {
               accessor: 'action',
               Cell: row => (
               <div>
-                 <Button variant="warning"  onClick={e=> handleEdit(row.row.original)}><i class="fa fa-edit"></i>Edit</Button>
-                 <Button variant="danger"  onClick={e=> handleDelete(row.row.original)}><i class="fa fa-close"></i>Delete</Button>
+                 <Button variant="warning"  onClick={e=> handleEdit(row.row.original)}><FontAwesomeIcon icon={faEdit} style={{ height: "20px" }} />Edit</Button>
+                 <Button variant="danger"  onClick={e=> handleDelete(row.row.original)}><FontAwesomeIcon icon={faClose} style={{ height: "20px" }} />Delete</Button>
               </div>
               )
             }
@@ -225,16 +227,12 @@ export default function Users() {
     <Layout>
       <Head>
         <title>Users</title>
-        
-       
       </Head>
-      <h1>users</h1>
-      <button
-              className="btn btn-primary"
-              onClick={() => generatePDF(data)}
-            >
+      <h1> <FontAwesomeIcon icon={faUser} style={{ height: "20px" }} /> users</h1>
+      <button className="btn btn-primary"  onClick={() => generatePDF(data)}>
+          <FontAwesomeIcon icon={faPrint} style={{ height: "20px" }} />
               Report
-            </button>
+          </button>
       <Modal show={show} onHide={handleClose} animation={false}>
         <Modal.Header closeButton>
           <Modal.Title>{ formTitle } </Modal.Title>
@@ -289,18 +287,13 @@ export default function Users() {
         </form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-         
         </Modal.Footer>
       </Modal>
       <Button variant="success" onClick={handleShow}>
+      <FontAwesomeIcon icon={faPlus} style={{ height: "20px" }} />
         New
       </Button>
-      
       <br></br>
-      
       <>
       <Table columns={columns} data={data}  />
       {arrPages.map((num, index) => (
@@ -308,7 +301,6 @@ export default function Users() {
                className='btn btn-light'
                id = { 'btn'+ (index + 1)}
                 onClick={() => onPageSelect(index + 1, 'btn'+ (index + 1) )}
-                
               >
                 {index + 1}
               </button>

@@ -2,6 +2,8 @@
 
 import { React,  useState  } from 'react'
 import { useTable, useFilters, useSortBy } from "react-table";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
 export default function Table({ columns, data }) {
 
@@ -44,10 +46,10 @@ const {
   */
   return (
     <>
-    <div class="input-group rounded">
-    <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon"  value={filterInput}   onChange={handleFilterChange}/>
+    <div className="input-group rounded">
+    <input type="search" className="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon"  value={filterInput}   onChange={handleFilterChange}/>
     <span className="input-group-text border-0" id="search-addon">
-    <i class="fa fa-search"></i>
+    <FontAwesomeIcon icon={faSearch} style={{ height: "10px" }} />
     </span>
   </div>
     <table {...getTableProps()} className='table table-bordered table-hover'>
